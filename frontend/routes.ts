@@ -22,9 +22,15 @@ export const views: ViewRoute[] = [
   // place routes below (more info https://vaadin.com/docs/latest/fusion/routing/overview)
   {
     path: '',
-    component: 'hello-world-view',
+    component: 'accounts-coping-view',
     icon: '',
     title: '',
+  },
+  {
+    path: 'accounts',
+    component: 'accounts-coping-view',
+    icon: 'la la-globe',
+    title: 'Kopiowanie kont',
   },
   {
     path: 'hello',
@@ -41,12 +47,6 @@ export const views: ViewRoute[] = [
       await import('./views/about/about-view');
       return;
     },
-  },
-  {
-    path: 'accounts',
-    component: 'accounts-coping-view',
-    icon: 'la la-globe',
-    title: 'Kopiowanie kont',
   }
 ];
 
