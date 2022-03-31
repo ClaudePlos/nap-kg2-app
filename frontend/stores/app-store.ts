@@ -1,5 +1,6 @@
 import { RouterLocation } from '@vaadin/router';
 import { makeAutoObservable } from 'mobx';
+import {login as serverLogin, logout as serverLogout} from "@hilla/frontend";
 
 export class AppStore {
   applicationName = 'nap-kg2-app';
@@ -8,6 +9,8 @@ export class AppStore {
   location = '';
 
   currentViewTitle = '';
+
+  loggedIn = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -28,5 +31,34 @@ export class AppStore {
       this.currentViewTitle = (location?.route as any)?.title || '';
     }
   }
+
+  async login(username: string, password: string) {
+    const result = await serverLogin(username, password);
+    console.log(result);
+    if (!result.error) {
+      this.setLoggedIn(true);
+    } else {
+      throw new Error(result.errorMessage || 'Login failed');
+    }
+  }
+
+  async logout() {
+    await serverLogout();
+    this.setLoggedIn(false);
+  }
+
+  setLoggedIn(loggedIn: boolean) {
+    this.loggedIn = loggedIn;
+    if (loggedIn) {
+      //this.initFromServer();
+    }
+  }
+
+
 }
+
+
+
+
+
 export const appStore = new AppStore();
