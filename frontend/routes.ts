@@ -1,6 +1,7 @@
 import { Commands, Context, Route, Router  } from '@vaadin/router';
 import './views/helloworld/hello-world-view';
 import './views/main-layout';
+import './views/accountscoping/accounts-coping-view';
 
 import { appStore } from './stores/app-store';
 import { autorun } from 'mobx';
@@ -41,6 +42,12 @@ export const views: ViewRoute[] = [
       return;
     },
   },
+  {
+    path: 'accounts',
+    component: 'accounts-coping-view',
+    icon: 'la la-globe',
+    title: 'Kopiowanie kont',
+  }
 ];
 
 const authGuard = async (context: Context, commands: Commands) => {
