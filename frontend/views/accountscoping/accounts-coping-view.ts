@@ -12,12 +12,14 @@ import * as CompanyEndpoint from 'Frontend/generated/CompanyEndpoint';
 import EatFirma from 'Frontend/generated/pl/kskowronski/data/entities/EatFirma';
 import EatFirmaModel from 'Frontend/generated/pl/kskowronski/data/entities/EatFirmaModel';
 import {Notification} from "@vaadin/notification";
+import * as HelloWorldEndpoint from "Frontend/generated/HelloWorldEndpoint";
 
 @customElement('accounts-coping-view')
 export class AboutView extends LitElement  {
     mask = '';
     year = '';
     level = '';
+    klKodCompany = '';
 
     @state()
     private comapnies: EatFirma[] = [];
@@ -34,6 +36,7 @@ export class AboutView extends LitElement  {
             <div>
                 <vaadin-combo-box label="Do firmy"
                                   .items="${this.comapnies}"
+                                  @value-changed="${this.companyChanged}"
                                   item-label-path="frmName"
                                   item-value-path="frmKlId"
                                   allow-custom-value
@@ -73,9 +76,14 @@ export class AboutView extends LitElement  {
         this.level = e.detail.value;
     }
 
-    async copyAccountsToCompany() {
+    companyChanged(e: CustomEvent) {
+        console.log(e.detail.value as string);
+        this.klKodCompany = e.detail.value as string;
+    }
 
-        Notification.show(this.mask);
+    async copyAccountsToCompany() {
+        const serverResponse = await CompanyEndpoint.copyAccountsToCompany(Number(this.klKodCompany), this.mask, this.year, this.level);
+        Notification.show(serverResponse as string);
     }
 
 

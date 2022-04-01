@@ -30,5 +30,11 @@ public class CompanyEndpoint {
         return item;
     }
 
+    public String copyAccountsToCompany( Integer klKodCompany, String mask, String year, String level ) {
+        String response = "Skopiowane";
+
+        return response + " do klKod: " + klKodCompany;
+    }
+
 
 }
